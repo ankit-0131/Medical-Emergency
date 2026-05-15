@@ -16,7 +16,7 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         if (Auth::check()) {
-            return redirect()->route('user.dashboard');
+            return redirect('/');
         }
 
         return view('auth.register');
@@ -55,7 +55,7 @@ class RegisterController extends Controller
         // Auto-login after registration
         Auth::login($user);
 
-        return redirect()->route('user.dashboard')
+        return redirect('/')
             ->with('success', 'Registration successful! Welcome, ' . $user->name . '!');
     }
 }
