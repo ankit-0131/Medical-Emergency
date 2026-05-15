@@ -21,6 +21,9 @@ class DashboardController extends Controller
         // Get count of total emergencies by this user
         $totalEmergencies = $user->emergencies()->count();
 
-        return view('user.dashboard', compact('user', 'latestEmergency', 'totalEmergencies'));
+        // Get 3 hospitals for the dashboard summary
+        $nearbyHospitals = \App\Models\Hospital::limit(3)->get();
+
+        return view('user.dashboard', compact('user', 'latestEmergency', 'totalEmergencies', 'nearbyHospitals'));
     }
 }

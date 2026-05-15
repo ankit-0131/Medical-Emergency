@@ -18,9 +18,9 @@ use App\Http\Controllers\Admin\ReportController;
 |--------------------------------------------------------------------------
 */
 
-// ── Redirect root to login ──
+// ── Landing Page ──
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('welcome');
 });
 
 // ── Authentication Routes ──

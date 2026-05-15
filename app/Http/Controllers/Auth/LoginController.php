@@ -13,11 +13,9 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        // If already logged in, redirect to appropriate dashboard
+        // If already logged in, redirect to home
         if (Auth::check()) {
-            return Auth::user()->isAdmin()
-                ? redirect()->route('admin.dashboard')
-                : redirect()->route('user.dashboard');
+            return redirect('/');
         }
 
         return view('auth.login');
@@ -39,13 +37,8 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            // Redirect based on role
-            if (Auth::user()->isAdmin()) {
-                return redirect()->route('admin.dashboard')
-                    ->with('success', 'Welcome back, Admin!');
-            }
-
-            return redirect()->route('user.dashboard')
+            // Redirect to home page
+            return redirect('/')
                 ->with('success', 'Welcome back, ' . Auth::user()->name . '!');
         }
 
@@ -64,7 +57,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')
+        return redirect('/')
             ->with('success', 'You have been logged out successfully.');
     }
 }

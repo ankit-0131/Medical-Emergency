@@ -2,135 +2,166 @@
 @section('title', 'My Profile')
 
 @section('content')
-<div class="page-header mb-4">
-    <h1 class="page-title"><i class="bi bi-person-vcard me-2"></i>My Profile</h1>
-    <p class="page-subtitle">Manage your personal information and emergency contacts</p>
+<div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+        <h1 class="text-3xl font-poppins font-bold text-white tracking-tight flex items-center gap-3">
+            <div class="p-2 bg-secondary-blue/20 rounded-xl">
+                <i data-lucide="user-circle" class="w-6 h-6 text-secondary-blue"></i>
+            </div>
+            My Profile
+        </h1>
+        <p class="text-slate-400 mt-2">Manage your personal information and emergency contacts</p>
+    </div>
 </div>
 
 @if(session('success'))
-    <div class="alert-custom alert-success auto-dismiss mb-4 shadow-sm" style="animation: slideInDown 0.4s ease-out;">
-        <i class="bi bi-check-circle-fill"></i>
-        {{ session('success') }}
+    <div class="mb-6 px-4 py-3 rounded-xl bg-success-green/10 border border-success-green/30 text-success-green flex items-start gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
+        <i data-lucide="check-circle-2" class="w-5 h-5 shrink-0 mt-0.5"></i>
+        <p class="text-sm font-medium">{{ session('success') }}</p>
     </div>
 @endif
 
 <form action="{{ route('user.profile.update') }}" method="POST" id="profile-form">
     @csrf
 
-    <div class="row g-4">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {{-- ══ LEFT COLUMN: PROFILE SUMMARY & SECURITY ══ --}}
-        <div class="col-lg-4">
+        <div class="lg:col-span-4 flex flex-col gap-8">
             <!-- Profile Info Card -->
-            <div class="card-custom text-center mb-4 position-relative overflow-hidden" style="padding: 40px 20px;">
-                <div style="position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: rgba(220,38,38,0.1); border-radius: 50%; filter: blur(30px); pointer-events: none;"></div>
+            <div class="glass-card p-8 text-center relative overflow-hidden">
+                <div class="absolute -top-10 -left-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl mix-blend-screen pointer-events-none"></div>
                 
-                <div style="width:110px;height:110px;background:radial-gradient(circle, rgba(220,38,38,0.15), rgba(153,27,27,0.05));border:2px solid rgba(220,38,38,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3.5rem;margin: 0 auto 20px;box-shadow: 0 0 25px rgba(220,38,38,0.15); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    <i class="bi bi-person-fill text-danger"></i>
+                <div class="w-28 h-28 mx-auto mb-4 bg-gradient-to-br from-primary/20 to-red-900/20 border-2 border-primary/30 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(255,59,48,0.15)] group hover:scale-105 transition-transform duration-300">
+                    <i data-lucide="user" class="w-12 h-12 text-primary group-hover:animate-pulse"></i>
                 </div>
                 
-                <h3 style="font-weight: 800; font-size: 1.5rem; margin-bottom: 4px; color: var(--white);">{{ $user->name }}</h3>
-                <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom: 16px;"><i class="bi bi-envelope-fill me-2"></i>{{ $user->email }}</p>
+                <h3 class="font-bold text-2xl text-white mb-1">{{ $user->name }}</h3>
+                <p class="text-slate-400 text-sm mb-6 flex items-center justify-center gap-2">
+                    <i data-lucide="mail" class="w-4 h-4"></i> {{ $user->email }}
+                </p>
                 
-                <div class="d-inline-flex align-items-center justify-content-center px-3 py-2 rounded-pill" style="background: rgba(220,38,38,0.1); border: 1px solid rgba(220,38,38,0.2);">
-                    <i class="bi bi-droplet-fill text-danger me-2"></i>
-                    <span style="font-weight: 700; color: #fca5a5; font-size: 0.9rem;">Blood Group: {{ strtoupper($user->blood_group ?? 'N/A') }}</span>
+                <div class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-red-400 font-bold text-sm">
+                    <i data-lucide="droplet" class="w-4 h-4"></i>
+                    Blood Group: {{ strtoupper($user->blood_group ?? 'N/A') }}
                 </div>
             </div>
 
             <!-- Password Card -->
-            <div class="card-custom mb-4">
-                <h5 style="font-size:0.85rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; display: flex; align-items: center; gap: 8px;">
-                    <i class="bi bi-shield-lock-fill text-secondary"></i> Security
+            <div class="glass-card p-6">
+                <h5 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-secondary-blue"></i> Security
                 </h5>
-                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:20px;">Leave blank if you don't want to change your password.</p>
+                <p class="text-xs text-slate-400 mb-6">Leave blank if you don't want to change your password.</p>
                 
-                <div class="mb-3">
-                    <label for="password" class="form-label-custom"><i class="bi bi-key me-1"></i>New Password</label>
-                    <input type="password" id="password" name="password" class="form-control-custom" placeholder="Enter new password">
-                </div>
-                <div>
-                    <label for="password_confirmation" class="form-label-custom"><i class="bi bi-key-fill me-1"></i>Confirm Password</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-control-custom" placeholder="Repeat password">
+                <div class="space-y-4">
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-slate-300 mb-2">New Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i data-lucide="key" class="w-5 h-5 text-slate-500"></i>
+                            </div>
+                            <input type="password" id="password" name="password"
+                                class="block w-full pl-10 pr-3 py-3 border border-slate-700 rounded-xl bg-slate-900/50 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                placeholder="Enter new password">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="password_confirmation" class="block text-sm font-medium text-slate-300 mb-2">Confirm Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i data-lucide="key-square" class="w-5 h-5 text-slate-500"></i>
+                            </div>
+                            <input type="password" id="password_confirmation" name="password_confirmation"
+                                class="block w-full pl-10 pr-3 py-3 border border-slate-700 rounded-xl bg-slate-900/50 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                placeholder="Repeat password">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         {{-- ══ RIGHT COLUMN: CONTACTS & EMERGENCY ══ --}}
-        <div class="col-lg-8">
+        <div class="lg:col-span-8 flex flex-col gap-8">
             <!-- Personal Contact Details -->
-            <div class="card-custom mb-4 position-relative overflow-hidden">
-                <div style="position: absolute; right: -30px; bottom: -30px; font-size: 8rem; color: rgba(255,255,255,0.02); pointer-events: none;">
-                    <i class="bi bi-telephone-fill"></i>
+            <div class="glass-card p-6 relative overflow-hidden">
+                <div class="absolute -right-8 -bottom-8 opacity-5 text-white pointer-events-none">
+                    <i data-lucide="phone-call" class="w-48 h-48"></i>
                 </div>
                 
-                <h5 style="font-size:0.85rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:20px; display: flex; align-items: center; gap: 8px;">
-                    <i class="bi bi-person-lines-fill text-info"></i> Personal Details
+                <h5 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-6 flex items-center gap-2">
+                    <i data-lucide="contact" class="w-4 h-4 text-info text-blue-400"></i> Personal Details
                 </h5>
                 
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <label for="phone" class="form-label-custom">Phone Number</label>
-                        <div class="input-group">
-                            <span class="input-group-text" style="background: rgba(255,255,255,0.05); border: 1px solid var(--dark-border); border-right: none; color: var(--text-muted);"><i class="bi bi-telephone"></i></span>
-                            <input type="text" id="phone" name="phone"
-                                   class="form-control-custom @error('phone') border-danger @enderror"
-                                   style="border-left: none; border-top-left-radius: 0; border-bottom-left-radius: 0;"
-                                   value="{{ old('phone', $user->phone) }}"
-                                   placeholder="9876543210" required>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-slate-300 mb-2">Phone Number</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i data-lucide="phone" class="w-5 h-5 text-slate-500"></i>
+                            </div>
+                            <input type="text" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" required
+                                class="block w-full pl-10 pr-3 py-3 border {{ $errors->has('phone') ? 'border-primary' : 'border-slate-700' }} rounded-xl bg-slate-900/50 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                placeholder="9876543210">
                         </div>
                         @error('phone')
-                            <div class="text-danger mt-1" style="font-size:0.82rem;"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                            <div class="text-primary text-xs mt-1 font-medium flex items-center gap-1"><i data-lucide="alert-circle" class="w-3 h-3"></i> {{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-md-6">
-                        <label for="blood_group" class="form-label-custom">Blood Group</label>
-                        <div class="input-group">
-                            <span class="input-group-text" style="background: rgba(255,255,255,0.05); border: 1px solid var(--dark-border); border-right: none; color: var(--text-muted);"><i class="bi bi-droplet"></i></span>
-                            <select id="blood_group" name="blood_group" class="form-control-custom" style="border-left: none; border-top-left-radius: 0; border-bottom-left-radius: 0;" required>
+                    <div>
+                        <label for="blood_group" class="block text-sm font-medium text-slate-300 mb-2">Blood Group</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i data-lucide="droplet" class="w-5 h-5 text-slate-500"></i>
+                            </div>
+                            <select id="blood_group" name="blood_group" required
+                                class="block w-full pl-10 pr-10 py-3 border border-slate-700 rounded-xl bg-slate-900/50 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none">
                                 @foreach(['A+','A-','B+','B-','AB+','AB-','O+','O-'] as $bg)
-                                    <option value="{{ $bg }}" {{ old('blood_group', $user->blood_group) == $bg ? 'selected' : '' }}>{{ $bg }}</option>
+                                    <option value="{{ $bg }}" {{ old('blood_group', $user->blood_group) == $bg ? 'selected' : '' }} class="bg-slate-900">{{ $bg }}</option>
                                 @endforeach
                             </select>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-500"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Emergency Contacts -->
-            <div class="card-custom mb-4">
-                <h5 style="font-size:0.85rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:24px; display: flex; align-items: center; gap: 8px;">
-                    <i class="bi bi-heart-pulse-fill text-danger"></i> Emergency Contacts
+            <div class="glass-card p-6">
+                <h5 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-8 flex items-center gap-2">
+                    <i data-lucide="heart-pulse" class="w-4 h-4 text-primary"></i> Emergency Contacts
                 </h5>
 
                 {{-- Contact 1 --}}
-                <div class="p-3 mb-4 rounded" style="background: rgba(220,38,38,0.03); border: 1px solid rgba(220,38,38,0.15); position: relative;">
-                    <span class="badge bg-danger position-absolute" style="top: -10px; left: 16px; font-size: 0.75rem; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(220,38,38,0.3);"><i class="bi bi-star-fill me-1"></i> PRIMARY CONTACT</span>
-                    <div class="row g-3 mt-1">
-                        <div class="col-md-4">
-                            <label for="emergency_contact_name" class="form-label-custom">Full Name</label>
+                <div class="relative p-6 mb-8 rounded-xl bg-primary/5 border border-primary/20">
+                    <span class="absolute -top-3 left-6 px-3 py-1 bg-primary text-white text-[10px] font-bold tracking-widest uppercase rounded-full shadow-[0_4px_10px_rgba(255,59,48,0.3)] flex items-center gap-1">
+                        <i data-lucide="star" class="w-3 h-3"></i> Primary Contact
+                    </span>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                        <div>
+                            <label for="emergency_contact_name" class="block text-xs font-medium text-slate-400 mb-1">Full Name</label>
                             <input type="text" id="emergency_contact_name" name="emergency_contact_name"
-                                   class="form-control-custom @error('emergency_contact_name') border-danger @enderror"
-                                   value="{{ old('emergency_contact_name', $user->emergency_contact_name) }}"
-                                   placeholder="Name" required>
+                                class="w-full px-3 py-2 bg-slate-900/50 border {{ $errors->has('emergency_contact_name') ? 'border-primary' : 'border-slate-700' }} rounded-lg text-white focus:ring-2 focus:ring-primary focus:outline-none transition-all"
+                                value="{{ old('emergency_contact_name', $user->emergency_contact_name) }}" placeholder="Name" required>
                             @error('emergency_contact_name')
-                                <div class="text-danger mt-1" style="font-size:0.82rem;"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                                <div class="text-primary text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-4">
-                            <label for="emergency_contact_phone" class="form-label-custom">Phone Number</label>
+                        <div>
+                            <label for="emergency_contact_phone" class="block text-xs font-medium text-slate-400 mb-1">Phone Number</label>
                             <input type="text" id="emergency_contact_phone" name="emergency_contact_phone"
-                                   class="form-control-custom @error('emergency_contact_phone') border-danger @enderror"
-                                   value="{{ old('emergency_contact_phone', $user->emergency_contact_phone) }}"
-                                   placeholder="Phone" required>
+                                class="w-full px-3 py-2 bg-slate-900/50 border {{ $errors->has('emergency_contact_phone') ? 'border-primary' : 'border-slate-700' }} rounded-lg text-white focus:ring-2 focus:ring-primary focus:outline-none transition-all"
+                                value="{{ old('emergency_contact_phone', $user->emergency_contact_phone) }}" placeholder="Phone" required>
                             @error('emergency_contact_phone')
-                                <div class="text-danger mt-1" style="font-size:0.82rem;"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                                <div class="text-primary text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-4">
-                            <label for="relation" class="form-label-custom">Relation</label>
-                            <select id="relation" name="relation" class="form-control-custom" required>
+                        <div>
+                            <label for="relation" class="block text-xs font-medium text-slate-400 mb-1">Relation</label>
+                            <select id="relation" name="relation" class="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-primary focus:outline-none transition-all" required>
                                 @foreach(['Father','Mother','Spouse','Sibling','Guardian','Other'] as $r)
-                                    <option value="{{ $r }}" {{ old('relation', $user->relation) == $r ? 'selected' : '' }}>{{ $r }}</option>
+                                    <option value="{{ $r }}" {{ old('relation', $user->relation) == $r ? 'selected' : '' }} class="bg-slate-900">{{ $r }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -138,35 +169,35 @@
                 </div>
 
                 {{-- Contact 2 --}}
-                <div class="p-3 mb-4 rounded" style="background: rgba(59,130,246,0.03); border: 1px solid rgba(59,130,246,0.15); position: relative;">
-                    <span class="badge bg-primary position-absolute" style="top: -10px; left: 16px; font-size: 0.75rem; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(59,130,246,0.3);"><i class="bi bi-shield-plus me-1"></i> SECONDARY FAMILY (OPTIONAL)</span>
-                    <div class="row g-3 mt-1">
-                        <div class="col-md-4">
-                            <label for="emergency_contact2_name" class="form-label-custom">Full Name</label>
+                <div class="relative p-6 mb-8 rounded-xl bg-secondary-blue/5 border border-secondary-blue/20">
+                    <span class="absolute -top-3 left-6 px-3 py-1 bg-secondary-blue text-white text-[10px] font-bold tracking-widest uppercase rounded-full shadow-[0_4px_10px_rgba(30,58,138,0.3)] flex items-center gap-1">
+                        <i data-lucide="shield-plus" class="w-3 h-3"></i> Secondary Family (Optional)
+                    </span>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                        <div>
+                            <label for="emergency_contact2_name" class="block text-xs font-medium text-slate-400 mb-1">Full Name</label>
                             <input type="text" id="emergency_contact2_name" name="emergency_contact2_name"
-                                   class="form-control-custom @error('emergency_contact2_name') border-danger @enderror"
-                                   value="{{ old('emergency_contact2_name', $user->emergency_contact2_name) }}"
-                                   placeholder="Name">
+                                class="w-full px-3 py-2 bg-slate-900/50 border {{ $errors->has('emergency_contact2_name') ? 'border-primary' : 'border-slate-700' }} rounded-lg text-white focus:ring-2 focus:ring-secondary-blue focus:outline-none transition-all"
+                                value="{{ old('emergency_contact2_name', $user->emergency_contact2_name) }}" placeholder="Name">
                             @error('emergency_contact2_name')
-                                <div class="text-danger mt-1" style="font-size:0.82rem;"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                                <div class="text-primary text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-4">
-                            <label for="emergency_contact2_phone" class="form-label-custom">Phone Number</label>
+                        <div>
+                            <label for="emergency_contact2_phone" class="block text-xs font-medium text-slate-400 mb-1">Phone Number</label>
                             <input type="text" id="emergency_contact2_phone" name="emergency_contact2_phone"
-                                   class="form-control-custom @error('emergency_contact2_phone') border-danger @enderror"
-                                   value="{{ old('emergency_contact2_phone', $user->emergency_contact2_phone) }}"
-                                   placeholder="Phone">
+                                class="w-full px-3 py-2 bg-slate-900/50 border {{ $errors->has('emergency_contact2_phone') ? 'border-primary' : 'border-slate-700' }} rounded-lg text-white focus:ring-2 focus:ring-secondary-blue focus:outline-none transition-all"
+                                value="{{ old('emergency_contact2_phone', $user->emergency_contact2_phone) }}" placeholder="Phone">
                             @error('emergency_contact2_phone')
-                                <div class="text-danger mt-1" style="font-size:0.82rem;"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                                <div class="text-primary text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-4">
-                            <label for="emergency_contact2_relation" class="form-label-custom">Relation</label>
-                            <select id="emergency_contact2_relation" name="emergency_contact2_relation" class="form-control-custom">
-                                <option value="">— Select —</option>
+                        <div>
+                            <label for="emergency_contact2_relation" class="block text-xs font-medium text-slate-400 mb-1">Relation</label>
+                            <select id="emergency_contact2_relation" name="emergency_contact2_relation" class="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-secondary-blue focus:outline-none transition-all">
+                                <option value="" class="text-slate-500">— Select —</option>
                                 @foreach(['Father','Mother','Spouse','Sibling','Guardian','Other'] as $r)
-                                    <option value="{{ $r }}" {{ old('emergency_contact2_relation', $user->emergency_contact2_relation) == $r ? 'selected' : '' }}>{{ $r }}</option>
+                                    <option value="{{ $r }}" {{ old('emergency_contact2_relation', $user->emergency_contact2_relation) == $r ? 'selected' : '' }} class="bg-slate-900">{{ $r }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -174,35 +205,35 @@
                 </div>
 
                 {{-- Contact 3 --}}
-                <div class="p-3 rounded" style="background: rgba(34,197,94,0.03); border: 1px solid rgba(34,197,94,0.15); position: relative;">
-                    <span class="badge bg-success position-absolute" style="top: -10px; left: 16px; font-size: 0.75rem; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(34,197,94,0.3);"><i class="bi bi-people-fill me-1"></i> FRIEND / OTHER (OPTIONAL)</span>
-                    <div class="row g-3 mt-1">
-                        <div class="col-md-4">
-                            <label for="emergency_contact3_name" class="form-label-custom">Full Name</label>
+                <div class="relative p-6 rounded-xl bg-success-green/5 border border-success-green/20">
+                    <span class="absolute -top-3 left-6 px-3 py-1 bg-success-green text-white text-[10px] font-bold tracking-widest uppercase rounded-full shadow-[0_4px_10px_rgba(34,197,94,0.3)] flex items-center gap-1">
+                        <i data-lucide="users" class="w-3 h-3"></i> Friend / Other (Optional)
+                    </span>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                        <div>
+                            <label for="emergency_contact3_name" class="block text-xs font-medium text-slate-400 mb-1">Full Name</label>
                             <input type="text" id="emergency_contact3_name" name="emergency_contact3_name"
-                                   class="form-control-custom @error('emergency_contact3_name') border-danger @enderror"
-                                   value="{{ old('emergency_contact3_name', $user->emergency_contact3_name) }}"
-                                   placeholder="Name">
+                                class="w-full px-3 py-2 bg-slate-900/50 border {{ $errors->has('emergency_contact3_name') ? 'border-primary' : 'border-slate-700' }} rounded-lg text-white focus:ring-2 focus:ring-success-green focus:outline-none transition-all"
+                                value="{{ old('emergency_contact3_name', $user->emergency_contact3_name) }}" placeholder="Name">
                             @error('emergency_contact3_name')
-                                <div class="text-danger mt-1" style="font-size:0.82rem;"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                                <div class="text-primary text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-4">
-                            <label for="emergency_contact3_phone" class="form-label-custom">Phone Number</label>
+                        <div>
+                            <label for="emergency_contact3_phone" class="block text-xs font-medium text-slate-400 mb-1">Phone Number</label>
                             <input type="text" id="emergency_contact3_phone" name="emergency_contact3_phone"
-                                   class="form-control-custom @error('emergency_contact3_phone') border-danger @enderror"
-                                   value="{{ old('emergency_contact3_phone', $user->emergency_contact3_phone) }}"
-                                   placeholder="Phone">
+                                class="w-full px-3 py-2 bg-slate-900/50 border {{ $errors->has('emergency_contact3_phone') ? 'border-primary' : 'border-slate-700' }} rounded-lg text-white focus:ring-2 focus:ring-success-green focus:outline-none transition-all"
+                                value="{{ old('emergency_contact3_phone', $user->emergency_contact3_phone) }}" placeholder="Phone">
                             @error('emergency_contact3_phone')
-                                <div class="text-danger mt-1" style="font-size:0.82rem;"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                                <div class="text-primary text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-4">
-                            <label for="emergency_contact3_relation" class="form-label-custom">Relation</label>
-                            <select id="emergency_contact3_relation" name="emergency_contact3_relation" class="form-control-custom">
-                                <option value="">— Select —</option>
+                        <div>
+                            <label for="emergency_contact3_relation" class="block text-xs font-medium text-slate-400 mb-1">Relation</label>
+                            <select id="emergency_contact3_relation" name="emergency_contact3_relation" class="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-success-green focus:outline-none transition-all">
+                                <option value="" class="text-slate-500">— Select —</option>
                                 @foreach(['Friend','Colleague','Neighbour','Other'] as $r)
-                                    <option value="{{ $r }}" {{ old('emergency_contact3_relation', $user->emergency_contact3_relation) == $r ? 'selected' : '' }}>{{ $r }}</option>
+                                    <option value="{{ $r }}" {{ old('emergency_contact3_relation', $user->emergency_contact3_relation) == $r ? 'selected' : '' }} class="bg-slate-900">{{ $r }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -212,9 +243,9 @@
             </div>
 
             <!-- Save Action -->
-            <div class="text-end">
-                <button type="submit" class="btn-primary-custom" style="padding: 14px 40px; font-size: 1rem; border-radius: 50px; box-shadow: 0 4px 15px rgba(220,38,38,0.3);">
-                    <i class="bi bi-save me-2"></i> Save All Changes
+            <div class="flex justify-end">
+                <button type="submit" class="flex items-center gap-2 px-8 py-3 rounded-full bg-primary text-white font-bold hover:bg-red-600 transition-all shadow-[0_4px_15px_rgba(255,59,48,0.3)] hover:scale-105">
+                    <i data-lucide="save" class="w-5 h-5"></i> Save All Changes
                 </button>
             </div>
         </div>
@@ -223,27 +254,6 @@
 @endsection
 
 @section('scripts')
-<style>
-    /* Small animation for success alert */
-    @keyframes slideInDown {
-        from { transform: translateY(-20px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-    
-    /* Make input group texts look better */
-    .input-group-text {
-        border-color: var(--dark-border);
-        background-color: rgba(255,255,255,0.03);
-        color: var(--text-muted);
-    }
-    
-    /* Enhance form controls when focused in group */
-    .form-control-custom:focus + .input-group-text,
-    .input-group:focus-within .input-group-text {
-        border-color: var(--red-primary);
-        color: var(--red-primary);
-    }
-</style>
 <script>
 /**
  * Client-side duplicate phone check before form submit.
@@ -277,12 +287,16 @@
             if (!banner) {
                 banner = document.createElement('div');
                 banner.id = 'phone-dupe-banner';
-                banner.className = 'alert-custom alert-danger mb-4 shadow-sm';
+                banner.className = 'mb-6 px-4 py-3 rounded-xl bg-primary/10 border border-primary/30 text-primary flex items-start gap-3 shadow-sm';
                 form.insertBefore(banner, form.firstChild);
             }
-            banner.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i><div><strong>Duplicate numbers detected:</strong><ul style="margin:4px 0 0 16px; font-size: 0.9rem;">'
+            banner.innerHTML = '<i data-lucide="alert-triangle" class="w-5 h-5 shrink-0 mt-0.5"></i><div><strong class="block mb-1">Duplicate numbers detected:</strong><ul class="list-disc pl-5 space-y-1 text-sm">'
                 + issues.map(i => `<li>${i}</li>`).join('')
                 + '</ul></div>';
+            
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
             banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     });
