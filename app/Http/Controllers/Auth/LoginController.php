@@ -37,6 +37,12 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
+            // Redirect based on role
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard')
+                    ->with('success', 'Welcome to the Admin Command Center, ' . Auth::user()->name . '!');
+            }
+
             // Redirect to home page
             return redirect('/')
                 ->with('success', 'Welcome back, ' . Auth::user()->name . '!');
