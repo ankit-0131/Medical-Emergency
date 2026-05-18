@@ -118,26 +118,64 @@
 
         <!-- Desktop Nav Links -->
         <div class="hidden md:flex items-center gap-8">
-            <a href="{{ route('user.dashboard') }}"
-               class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
-                <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
-            </a>
-            <a href="{{ route('user.history') }}"
-               class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
-                <i data-lucide="clock" class="w-4 h-4"></i> History
-            </a>
-            <a href="{{ route('user.hospitals') }}"
-               class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
-                <i data-lucide="hospital" class="w-4 h-4"></i> Hospitals
-            </a>
-            <a href="#about"
-               class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
-                <i data-lucide="info" class="w-4 h-4"></i> About
-            </a>
-            <a href="{{ route('user.profile') }}"
-               class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
-                <i data-lucide="user" class="w-4 h-4"></i> Profile
-            </a>
+            @auth
+                @if (Auth::user()->role === 'admin')
+                    <a href="{{ route('admin.dashboard') }}"
+                       class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Admin Dashboard
+                    </a>
+                    <a href="{{ route('admin.emergencies') }}"
+                       class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                        <i data-lucide="alert-triangle" class="w-4 h-4"></i> Emergencies
+                    </a>
+                    <a href="{{ route('admin.hospitals') }}"
+                       class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                        <i data-lucide="hospital" class="w-4 h-4"></i> Manage Hospitals
+                    </a>
+                    <a href="{{ route('admin.reports') }}"
+                       class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                        <i data-lucide="file-text" class="w-4 h-4"></i> Reports
+                    </a>
+                @else
+                    <a href="{{ route('user.dashboard') }}"
+                       class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+                    </a>
+                    <a href="{{ route('user.history') }}"
+                       class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                        <i data-lucide="clock" class="w-4 h-4"></i> History
+                    </a>
+                    <a href="{{ route('user.hospitals') }}"
+                       class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                        <i data-lucide="hospital" class="w-4 h-4"></i> Hospitals
+                    </a>
+                    <a href="#about"
+                       class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                        <i data-lucide="info" class="w-4 h-4"></i> About
+                    </a>
+                    <a href="{{ route('user.profile') }}"
+                       class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                        <i data-lucide="user" class="w-4 h-4"></i> Profile
+                    </a>
+                @endif
+            @else
+                <a href="{{ route('user.dashboard') }}"
+                   class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+                </a>
+                <a href="{{ route('user.history') }}"
+                   class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                    <i data-lucide="clock" class="w-4 h-4"></i> History
+                </a>
+                <a href="{{ route('user.hospitals') }}"
+                   class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                    <i data-lucide="hospital" class="w-4 h-4"></i> Hospitals
+                </a>
+                <a href="#about"
+                   class="flex items-center gap-2 text-sm font-semibold transition-colors text-slate-400 hover:text-white">
+                    <i data-lucide="info" class="w-4 h-4"></i> About
+                </a>
+            @endauth
 
             <!-- Auth/Logout -->
             @if (Route::has('login'))
@@ -168,21 +206,51 @@
 
     <!-- Mobile Menu -->
     <div x-show="mobileMenuOpen" x-transition x-cloak class="md:hidden fixed top-24 left-4 right-4 bg-[#1e293b] border border-slate-700/50 p-4 rounded-xl flex flex-col gap-4 z-[60] shadow-2xl">
-        <a href="{{ route('user.dashboard') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
-            <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard
-        </a>
-        <a href="{{ route('user.history') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
-            <i data-lucide="clock" class="w-5 h-5"></i> History
-        </a>
-        <a href="{{ route('user.hospitals') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
-            <i data-lucide="hospital" class="w-5 h-5"></i> Hospitals
-        </a>
-        <a href="#about" @click="mobileMenuOpen = false" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
-            <i data-lucide="info" class="w-5 h-5"></i> About
-        </a>
-        <a href="{{ route('user.profile') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
-            <i data-lucide="user" class="w-5 h-5"></i> Profile
-        </a>
+        @auth
+            @if (Auth::user()->role === 'admin')
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Admin Dashboard
+                </a>
+                <a href="{{ route('admin.emergencies') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                    <i data-lucide="alert-triangle" class="w-5 h-5"></i> Emergencies
+                </a>
+                <a href="{{ route('admin.hospitals') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                    <i data-lucide="hospital" class="w-5 h-5"></i> Manage Hospitals
+                </a>
+                <a href="{{ route('admin.reports') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                    <i data-lucide="file-text" class="w-5 h-5"></i> Reports
+                </a>
+            @else
+                <a href="{{ route('user.dashboard') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard
+                </a>
+                <a href="{{ route('user.history') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                    <i data-lucide="clock" class="w-5 h-5"></i> History
+                </a>
+                <a href="{{ route('user.hospitals') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                    <i data-lucide="hospital" class="w-5 h-5"></i> Hospitals
+                </a>
+                <a href="#about" @click="mobileMenuOpen = false" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                    <i data-lucide="info" class="w-5 h-5"></i> About
+                </a>
+                <a href="{{ route('user.profile') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                    <i data-lucide="user" class="w-5 h-5"></i> Profile
+                </a>
+            @endif
+        @else
+            <a href="{{ route('user.dashboard') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard
+            </a>
+            <a href="{{ route('user.history') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                <i data-lucide="clock" class="w-5 h-5"></i> History
+            </a>
+            <a href="{{ route('user.hospitals') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                <i data-lucide="hospital" class="w-5 h-5"></i> Hospitals
+            </a>
+            <a href="#about" @click="mobileMenuOpen = false" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 text-slate-300">
+                <i data-lucide="info" class="w-5 h-5"></i> About
+            </a>
+        @endauth
         @auth
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
@@ -352,10 +420,10 @@
                     <h4 class="text-xs font-bold text-red-500 uppercase tracking-widest">Platform Grid</h4>
                     <ul class="flex flex-col gap-3">
                         <li>
-                            <a href="{{ route('user.dashboard') }}" class="text-sm text-slate-400 hover:text-white transition-colors">Emergency Dispatch</a>
+                            <a href="@auth @if(Auth::user()->role === 'admin') {{ route('admin.emergencies') }} @else {{ route('user.dashboard') }} @endif @else {{ route('user.dashboard') }} @endauth" class="text-sm text-slate-400 hover:text-white transition-colors">Emergency Dispatch</a>
                         </li>
                         <li>
-                            <a href="{{ route('user.hospitals') }}" class="text-sm text-slate-400 hover:text-white transition-colors">Hospital Uplink</a>
+                            <a href="@auth @if(Auth::user()->role === 'admin') {{ route('admin.hospitals') }} @else {{ route('user.hospitals') }} @endif @else {{ route('user.hospitals') }} @endauth" class="text-sm text-slate-400 hover:text-white transition-colors">Hospital Uplink</a>
                         </li>
                         <li>
                             <a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Active Node Grid</a>
