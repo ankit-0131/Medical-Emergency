@@ -322,7 +322,7 @@
                     </ul>
                 </div>
                 <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700">
-                    <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&q=80&w=800" alt="MedAlert Technology" class="w-full h-auto">
+                    <img src="https://images.unsplash.com/photo-1631549916768-4119afc77f8a?auto=format&fit=crop&q=80&w=800" alt="MedAlert Technology" class="w-full h-auto">
                     <div class="absolute inset-0 bg-red-500/5 mix-blend-overlay"></div>
                 </div>
             </div>
