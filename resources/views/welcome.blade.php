@@ -329,6 +329,103 @@
         </div>
     </section>
 
+    <!-- ── Footer Section ── -->
+    <footer class="bg-[#0b0f19] border-t border-slate-800/80 pt-16 pb-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                
+                <!-- Left: Branding & Bio -->
+                <div class="flex flex-col gap-6">
+                    <a href="/" class="flex items-center gap-3 text-white transition-colors group">
+                        <div class="bg-red-500 p-2 rounded-lg shadow-lg shadow-red-500/30">
+                            <i data-lucide="activity" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="font-bold text-2xl tracking-tight text-white">MedAlert</span>
+                    </a>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        Providing an intelligent, fast-response medical emergency ecosystem. Saving lives through high-fidelity resource management.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="w-9 h-9 rounded-full bg-slate-800/60 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-500/10 hover:border-red-500/30 transition-all">
+                            <i data-lucide="facebook" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-slate-800/60 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-500/10 hover:border-red-500/30 transition-all">
+                            <i data-lucide="twitter" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-slate-800/60 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-500/10 hover:border-red-500/30 transition-all">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Platform Grid -->
+                <div class="flex flex-col gap-5">
+                    <h4 class="text-xs font-bold text-red-500 uppercase tracking-widest">Platform Grid</h4>
+                    <ul class="flex flex-col gap-3">
+                        <li>
+                            <a href="{{ route('user.dashboard') }}" class="text-sm text-slate-400 hover:text-white transition-colors">Emergency Dispatch</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Blood Repositories</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('user.hospitals') }}" class="text-sm text-slate-400 hover:text-white transition-colors">Hospital Uplink</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Active Node Grid</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Legal Protocols -->
+                <div class="flex flex-col gap-5">
+                    <h4 class="text-xs font-bold text-red-500 uppercase tracking-widest">Legal Protocols</h4>
+                    <ul class="flex flex-col gap-3">
+                        <li>
+                            <a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Terms of Utility</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">HIPAA Compliance</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Developer Hub</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Hotline Card -->
+                <div class="glass-card p-6 border-red-500/20 shadow-lg shadow-red-500/5 relative overflow-hidden bg-gradient-to-br from-red-950/10 via-slate-900/40 to-slate-900/80 rounded-2xl">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-red-500/5 rounded-full blur-2xl"></div>
+                    <h4 class="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-2">Hotline Protocol</h4>
+                    <div class="text-2xl font-black text-white tracking-tight mb-2">911 or 108</div>
+                    <p class="text-[10px] text-slate-500 leading-relaxed uppercase tracking-wider mb-4">
+                        Direct satellite bypass enabled. 24/7 Command Center Monitoring.
+                    </p>
+                    <a href="mailto:sos@medalert.com" class="inline-flex items-center gap-2 text-xs font-bold text-red-400 hover:text-red-300 transition-colors">
+                        <i data-lucide="mail" class="w-4 h-4"></i> sos@medalert.com
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Bottom Divider -->
+            <div class="border-t border-slate-800/60 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-slate-500 tracking-wider">
+                    &copy; 2026 MEDALERT GLOBAL SYSTEMS. ALL RIGHTS RESERVED.
+                </p>
+                <div class="flex items-center gap-6 text-xs text-slate-500 tracking-widest uppercase">
+                    <span>Encrypted Data Secure</span>
+                    <span class="text-slate-800">|</span>
+                    <span>Mission Critical Readiness</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
     <!-- Floating SOS Action Button (Bottom Right) -->
     <button {{ auth()->check() ? 'id=sos-button-floating' : 'onclick=window.location.href=\''.route('login').'\'' }} class="floating-sos group">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:animate-pulse text-white">
