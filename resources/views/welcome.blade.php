@@ -321,9 +321,9 @@
                         </li>
                     </ul>
                 </div>
-                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700">
-                    <img src="https://images.unsplash.com/photo-1631549916768-4119afc77f8a?auto=format&fit=crop&q=80&w=800" alt="MedAlert Technology" class="w-full h-auto">
-                    <div class="absolute inset-0 bg-red-500/5 mix-blend-overlay"></div>
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900/50 p-4">
+                    <img src="{{ asset('images/privacy-illustration.png') }}" alt="MedAlert Privacy Illustration" class="w-full h-auto rounded-xl">
+                    <div class="absolute inset-0 bg-red-500/5 mix-blend-overlay pointer-events-none"></div>
                 </div>
             </div>
         </div>
