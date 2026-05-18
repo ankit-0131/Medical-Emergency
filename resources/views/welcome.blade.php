@@ -345,17 +345,6 @@
                     <p class="text-sm text-slate-400 leading-relaxed">
                         Providing an intelligent, fast-response medical emergency ecosystem. Saving lives through high-fidelity resource management.
                     </p>
-                    <div class="flex items-center gap-4">
-                        <a href="#" class="w-9 h-9 rounded-full bg-slate-800/60 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-500/10 hover:border-red-500/30 transition-all">
-                            <i data-lucide="facebook" class="w-4 h-4"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-slate-800/60 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-500/10 hover:border-red-500/30 transition-all">
-                            <i data-lucide="twitter" class="w-4 h-4"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-slate-800/60 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-500/10 hover:border-red-500/30 transition-all">
-                            <i data-lucide="instagram" class="w-4 h-4"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <!-- Column 2: Platform Grid -->
@@ -364,9 +353,6 @@
                     <ul class="flex flex-col gap-3">
                         <li>
                             <a href="{{ route('user.dashboard') }}" class="text-sm text-slate-400 hover:text-white transition-colors">Emergency Dispatch</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Blood Repositories</a>
                         </li>
                         <li>
                             <a href="{{ route('user.hospitals') }}" class="text-sm text-slate-400 hover:text-white transition-colors">Hospital Uplink</a>
